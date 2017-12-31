@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "221227276585",
+    "firebase_url": "https://chit-o-chat-ac4c3.firebaseio.com",
+    "project_id": "chit-o-chat-ac4c3",
+    "storage_bucket": "chit-o-chat-ac4c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221227276585:android:0327db610289fbb4",
+        "android_client_info": {
+          "package_name": "com.akgec.naimish.chit_o_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221227276585-94evjbtjdn9drvce9nce44hitlabkthh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akgec.naimish.chit_o_chat",
+            "certificate_hash": "aa7bfbcfbdf167032fb09e89264f5382c2227466"
+          }
+        },
+        {
+          "client_id": "221227276585-kj0lhcpg88a3adcbg7steavfb5hh8odo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm1mgvfp1QYiEkL9DrVju06gnCbr2ws0Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221227276585-kj0lhcpg88a3adcbg7steavfb5hh8odo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
