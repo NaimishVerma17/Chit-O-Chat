@@ -28,16 +28,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterFragment extends Fragment {
-    private String mUserName;
+    // private String mUserName;
     private String mEmail;
     private String mPassword;
     private String mConfirmPassword;
-    private static final String KEY_USERNAME = "username";
+    // private static final String KEY_USERNAME = "username";
     private FirebaseAuth mAuth;
     private ProgressDialog progress;
 
-    @BindView(R.id.user_name)
-    EditText userName;
     @BindView(R.id.email)
     EditText email;
     @BindView(R.id.password)
@@ -69,23 +67,23 @@ public class RegisterFragment extends Fragment {
     }
 
     private void registerUser() {
-        mUserName = userName.getText().toString();
+        //mUserName = userName.getText().toString();
         mEmail = email.getText().toString();
         mPassword = password.getText().toString();
         mConfirmPassword = confirmPassword.getText().toString();
 
-        userName.setError(null);
+        // userName.setError(null);
         email.setError(null);
         password.setError(null);
 
         boolean killSwitch = false;
         View focusView = null;
 
-        if (Validations.isEmpty(mUserName)) {
-            userName.setError(getActivity().getString(R.string.email_error));
-            focusView = userName;
-            killSwitch = true;
-        }
+//        if (Validations.isEmpty(mUserName)) {
+//            userName.setError(getActivity().getString(R.string.email_error));
+//            focusView = userName;
+//            killSwitch = true;
+//        }
 
         if (!Validations.checkEmail(mEmail) || Validations.isEmpty(mEmail)) {
             email.setError(getActivity().getString(R.string.email_error));
@@ -107,7 +105,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void signup() {
-        MySharedPreferences.setPreference(getContext(), KEY_USERNAME, mUserName);
+        //MySharedPreferences.setPreference(getContext(), KEY_USERNAME, mUserName);
         mAuth.createUserWithEmailAndPassword(mEmail, mConfirmPassword)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override

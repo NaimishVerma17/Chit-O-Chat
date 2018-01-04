@@ -2,10 +2,15 @@ package com.akgec.naimish.chit_o_chat.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,23 +21,35 @@ import android.widget.Toast;
 import com.akgec.naimish.chit_o_chat.Activities.ChatActivity;
 import com.akgec.naimish.chit_o_chat.Activities.LoginActivity;
 import com.akgec.naimish.chit_o_chat.Activities.RegisterActivity;
+import com.akgec.naimish.chit_o_chat.Activities.UserNameActivity;
 import com.akgec.naimish.chit_o_chat.Info.MyMessage;
 import com.akgec.naimish.chit_o_chat.Info.Validations;
 import com.akgec.naimish.chit_o_chat.R;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
+
 
 public class LoginFragment extends Fragment {
     private String mEmail;
     private String mPassword;
     private ProgressDialog progress;
     private FirebaseAuth mAuth;
+    private static final int RC_SIGN_IN = 123;
 
     @BindView(R.id.login_email)
     EditText email;
@@ -46,6 +63,24 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.register_button)
     public void registerClicked() {
         startActivity(new Intent(getActivity(), RegisterActivity.class));
+    }
+
+    @OnClick(R.id.social_logins)
+    public void socialLoginsClicked() {
+
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(
+                                Arrays.asList(
+                                        new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                                        new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()
+                                ))
+                        .build(),
+                RC_SIGN_IN);
+
+
     }
 
     @OnClick(R.id.login_button)
@@ -93,6 +128,10 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser()!=null){
+            startActivity(new Intent(getActivity(),ChatActivity.class));
+            getActivity().finish();
+        }
     }
 
     private void login() {
@@ -100,7 +139,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    startActivity(new Intent(getActivity(), ChatActivity.class));
+                    startActivity(new Intent(getActivity(), UserNameActivity.class));
                     progress.dismiss();
                 } else {
                     MyMessage.showMessage(getActivity(), "Something went wrong!");
@@ -108,5 +147,43 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            // Successfully signed in
+            if (resultCode == RESULT_OK) {
+                startActivity(new Intent(getActivity(), UserNameActivity.class));
+                getActivity().finish();
+                return;
+            } else {
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    MyMessage.showMessage(getActivity(), "Sign in cancelled");
+                    return;
+                }
+
+                if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    MyMessage.showMessage(getActivity(), "No internet connection");
+                    return;
+                }
+
+                if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                    MyMessage.showMessage(getActivity(), "Something went wrong!!");
+                    return;
+                }
+            }
+
+            MyMessage.showMessage(getActivity(), "Unknown response");
+        }
+
+
     }
 }

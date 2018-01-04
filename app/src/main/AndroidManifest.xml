@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".Activities.ChatActivity">
         </activity>
+        <activity android:name=".Activities.UserNameActivity">
+        </activity>
     </application>
 
 </manifest>

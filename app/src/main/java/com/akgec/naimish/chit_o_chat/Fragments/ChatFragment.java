@@ -16,6 +16,7 @@ import com.akgec.naimish.chit_o_chat.Info.MyMessage;
 import com.akgec.naimish.chit_o_chat.Info.MySharedPreferences;
 import com.akgec.naimish.chit_o_chat.Info.Validations;
 import com.akgec.naimish.chit_o_chat.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,8 +35,9 @@ public class ChatFragment extends Fragment {
 
     private String mUsername;
     private DatabaseReference mRef;
-    private static final String KEY_USERNAME = "username";
     private ListAdapter adapter;
+    private FirebaseAuth mAuth;
+    private String email;
 
     @Nullable
     @Override
@@ -46,28 +48,28 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mRef= FirebaseDatabase.getInstance().getReference();
-        mUsername="naimish";
-        mUsername= MySharedPreferences.getPreference(getContext(),KEY_USERNAME);
-        adapter=new ListAdapter(getContext(),mUsername);
+        mAuth = FirebaseAuth.getInstance();
+        email = mAuth.getCurrentUser().getEmail().toString();
+        mRef = FirebaseDatabase.getInstance().getReference();
+        mUsername = MySharedPreferences.getPreference(getContext(), email+"");
+        adapter = new ListAdapter(getContext(), mUsername);
         listView.setAdapter(adapter);
     }
 
 
     @OnClick(R.id.send_message)
-    public void sendMessageToFirebase(){
-        String myMessage=messageChat.getText().toString();
-        if(Validations.isEmpty(myMessage)){
-            MyMessage.showMessage(getActivity(),"Message cannot be empty!");
-        }
-        else{
-            ChatInformation information=new ChatInformation(myMessage,mUsername);
+    public void sendMessageToFirebase() {
+        String myMessage = messageChat.getText().toString();
+        if (Validations.isEmpty(myMessage)) {
+            MyMessage.showMessage(getActivity(), "Message cannot be empty!");
+        } else {
+            ChatInformation information = new ChatInformation(myMessage, mUsername);
             mRef.child("CHATS").push().setValue(information);
             messageChat.setText("");
         }

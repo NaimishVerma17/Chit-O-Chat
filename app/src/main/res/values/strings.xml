@@ -9,5 +9,11 @@
     <string name="cnfpass">CONFIRM PASSWORD</string>
     <string name="email_error">Invalid E-Mail</string>
     <string name="password_error">Invalid Password</string>
+    <string name="u_error">Invalid Username</string>
     <string name="chat_hint">Type a message</string>
+    <string name="or">OR</string>
+    <string name="other_methods"><u>Sign in with other methods</u></string>
+
+    <string name="facebook_application_id" translatable="false">251753778695360</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb251753778695360</string>
 </resources>
