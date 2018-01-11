@@ -1,8 +1,8 @@
 package com.akgec.naimish.chit_o_chat.Info;
 
 public class ChatInformation {
-     String message;
-     String userName;
+     private String message;
+     private String userName;
 
     public ChatInformation(String message, String userName) {
         this.message = message;
@@ -10,4 +10,12 @@ public class ChatInformation {
     }
 
     public ChatInformation(){}
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
 }

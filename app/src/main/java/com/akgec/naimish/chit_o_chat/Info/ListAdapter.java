@@ -90,9 +90,9 @@ public class ListAdapter extends BaseAdapter {
         }
         holder = (MyViewHolder) view.getTag();
         ChatInformation information = getItem(i);
-        holder.chatMessage.setText(information.message);
-        holder.myUserName.setText(information.userName);
-        chatStyling(userName.equals(information.userName), holder);
+        holder.chatMessage.setText(information.getMessage());
+        holder.myUserName.setText(information.getUserName());
+        chatStyling(userName.equals(information.getUserName()), holder);
         return view;
     }
 
@@ -105,8 +105,7 @@ public class ListAdapter extends BaseAdapter {
             holder.layoutParams.gravity = Gravity.END;
             holder.myUserName.setTextColor(Color.BLUE);
             holder.chatMessage.setBackgroundResource(R.drawable.speech_bubble_green);
-        }
-        else{
+        } else {
             holder.layoutParams.gravity = Gravity.START;
             holder.myUserName.setTextColor(Color.GREEN);
             holder.chatMessage.setBackgroundResource(R.drawable.speech_bubble_orange);
