@@ -23,11 +23,13 @@ public class ListAdapter extends BaseAdapter {
     private Context context;
     private DatabaseReference dbReference;
     private String userName;
+    private String uniqueNode;
 
-    public ListAdapter(Context context, String userName) {
+    public ListAdapter(Context context, String userName,String uniqueNode) {
         this.context = context;
         this.userName = userName;
-        dbReference = FirebaseDatabase.getInstance().getReference().child("CHATS");
+        this.uniqueNode=uniqueNode;
+        dbReference = FirebaseDatabase.getInstance().getReference().child("CHATS").child(uniqueNode);
         dbReference.addChildEventListener(childEventListener);
         snapshots = new ArrayList<>();
     }

@@ -20,8 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
-public class UserFragment extends Fragment implements AdapterView.OnItemClickListener
-{
+public class UserFragment extends Fragment {
     @BindView(R.id.user_list_view)
     ListView userListView;
 
@@ -36,19 +35,14 @@ public class UserFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        email=FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
-        userListView.setAdapter(new UserListAdapter(getActivity(), MySharedPreferences.getPreference(getContext(), email+"")));
-        userListView.setOnItemClickListener(this);
+        email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+        userListView.setAdapter(new UserListAdapter(getActivity(), MySharedPreferences.getPreference(getContext(), email + "")));
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
 }

@@ -1,13 +1,16 @@
 package com.akgec.naimish.chit_o_chat.Info;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.akgec.naimish.chit_o_chat.Activities.ChatActivity;
 import com.akgec.naimish.chit_o_chat.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +24,7 @@ public class UserListAdapter extends BaseAdapter {
     private static final String CHILD_NAME = "USERS";
     private Context context;
     private ArrayList<DataSnapshot> userList;
+    private String email;
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -55,6 +59,7 @@ public class UserListAdapter extends BaseAdapter {
     public UserListAdapter(Context context, String myUserName) {
         this.context = context;
         this.myUserName = myUserName;
+        email = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
         userList = new ArrayList<>();
         mRef = FirebaseDatabase.getInstance().getReference().child(CHILD_NAME);
         mRef.addChildEventListener(childEventListener);
@@ -93,7 +98,17 @@ public class UserListAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Clicked",i+"");
+
+                DataSnapshot snapshot = userList.get(i);
+                UserInfo temp = snapshot.getValue(UserInfo.class);
+                if (temp.getUserName().equals(MySharedPreferences.getPreference(context, email + ""))) {
+                    MyMessage.showMessage(context, "Opps it seems like you are trying to talk to your self");
+                } else {
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    intent.putExtra("Receiver Username", temp.getUserName());
+                    context.startActivity(intent);
+                }
+
             }
         });
 

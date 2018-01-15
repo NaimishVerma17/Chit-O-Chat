@@ -14,6 +14,7 @@ import com.akgec.naimish.chit_o_chat.Info.ChatInformation;
 import com.akgec.naimish.chit_o_chat.Info.ListAdapter;
 import com.akgec.naimish.chit_o_chat.Info.MyMessage;
 import com.akgec.naimish.chit_o_chat.Info.MySharedPreferences;
+import com.akgec.naimish.chit_o_chat.Info.UniqueNode;
 import com.akgec.naimish.chit_o_chat.Info.Validations;
 import com.akgec.naimish.chit_o_chat.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,8 @@ public class ChatFragment extends Fragment {
     ImageButton sendMessage;
 
     private String mUsername;
+    private String receiverUsername;
+    private String uniqueNode;
     private DatabaseReference mRef;
     private ListAdapter adapter;
     private FirebaseAuth mAuth;
@@ -58,7 +61,9 @@ public class ChatFragment extends Fragment {
         email = mAuth.getCurrentUser().getEmail().toString();
         mRef = FirebaseDatabase.getInstance().getReference();
         mUsername = MySharedPreferences.getPreference(getContext(), email+"");
-        adapter = new ListAdapter(getContext(), mUsername);
+        receiverUsername=getActivity().getIntent().getExtras().getString("Receiver Username");
+        uniqueNode= UniqueNode.getUniqueNode(mUsername,receiverUsername);
+        adapter = new ListAdapter(getContext(), mUsername,uniqueNode);
         listView.setAdapter(adapter);
     }
 
@@ -70,7 +75,7 @@ public class ChatFragment extends Fragment {
             MyMessage.showMessage(getActivity(), "Message cannot be empty!");
         } else {
             ChatInformation information = new ChatInformation(myMessage, mUsername);
-            mRef.child("CHATS").push().setValue(information);
+            mRef.child("CHATS").child(uniqueNode).push().setValue(information);
             messageChat.setText("");
         }
     }
