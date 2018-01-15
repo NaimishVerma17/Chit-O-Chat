@@ -44,7 +44,7 @@ public class UsernameFragment extends Fragment {
     public void submit() {
         String mUserName = userName.getText().toString();
 
-        if (Validations.isEmpty(mUserName)) {
+        if (Validations.isEmpty(mUserName)||Validations.isLowerCase(mUserName)) {
             userName.setError(getActivity().getString(R.string.u_error));
 
         } else {

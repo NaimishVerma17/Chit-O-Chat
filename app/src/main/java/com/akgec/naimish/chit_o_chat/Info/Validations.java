@@ -13,4 +13,15 @@ public class Validations {
     public static boolean isEmpty(String s) {
         return s.length() == 0;
     }
+
+    public static boolean isLowerCase(String s) {
+        char c = s.charAt(0);
+        if (c >= 97 && c <= 122) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
 }
