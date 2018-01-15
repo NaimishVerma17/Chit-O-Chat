@@ -55,7 +55,8 @@ public class UserListAdapter extends BaseAdapter {
         this.context = context;
         this.myUserName = myUserName;
         userList = new ArrayList<>();
-        mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://chit-o-chat-ac4c3.firebaseio.com/").child(CHILD_NAME);
+        mRef = FirebaseDatabase.getInstance().getReference().child(CHILD_NAME);
+        mRef.addChildEventListener(childEventListener);
 
     }
 

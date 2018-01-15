@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class UsernameFragment extends Fragment {
 
         } else {
             MySharedPreferences.setPreference(getContext(), email + "", mUserName + "");
-            UserInfo userInfo = new UserInfo(uid, mUserName);
+            UserInfo userInfo = new UserInfo("Hello", mUserName);
             mRootRef.child(CHILD_NAME).push().setValue(userInfo);
             getActivity().finish();
             startActivity(new Intent(getContext(), UserActivity.class));
@@ -74,7 +75,7 @@ public class UsernameFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         email = mAuth.getCurrentUser().getEmail().toString();
         uid = mAuth.getCurrentUser().getUid().toString();
-        mRootRef = FirebaseDatabase.getInstance("https://chit-o-chat-ac4c3.firebaseio.com/").getReference("chit-o-chat-ac4c3");
+        mRootRef = FirebaseDatabase.getInstance().getReference();
     }
 
 }

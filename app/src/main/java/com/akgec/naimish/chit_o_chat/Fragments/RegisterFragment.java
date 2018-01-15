@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.akgec.naimish.chit_o_chat.Activities.LoginActivity;
+import com.akgec.naimish.chit_o_chat.Activities.UserNameActivity;
 import com.akgec.naimish.chit_o_chat.Info.MyMessage;
 import com.akgec.naimish.chit_o_chat.Info.MySharedPreferences;
 import com.akgec.naimish.chit_o_chat.Info.Validations;
@@ -112,7 +113,7 @@ public class RegisterFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Registered successfully!!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), LoginActivity.class));
+                            startActivity(new Intent(getActivity(), UserNameActivity.class));
                             progress.dismiss();
                         } else {
                             MyMessage.showMessage(getActivity(), "Something went wrong!");

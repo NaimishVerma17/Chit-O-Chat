@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment {
             startActivity(new Intent(getActivity(), UserActivity.class));
             getActivity().finish();
         }
-             Log.i("DatabaseRef",""+ FirebaseDatabase.getInstance());
+           //  Log.i("DatabaseRef",""+ FirebaseDatabase.getInstance());
 
     }
 
@@ -110,7 +110,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    startActivity(new Intent(getActivity(), UserNameActivity.class));
+                    startActivity(new Intent(getActivity(), UserActivity.class));
                     progress.dismiss();
                 } else {
                     MyMessage.showMessage(getActivity(), "Something went wrong!");

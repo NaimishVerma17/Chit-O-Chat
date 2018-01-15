@@ -9,7 +9,14 @@ public class UserInfo {
         this.userName = userName;
     }
 
+    public UserInfo() {
+    }
+
     public String getUserName() {
         return userName;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }
