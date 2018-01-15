@@ -114,6 +114,7 @@ public class RegisterFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Registered successfully!!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), UserNameActivity.class));
+                            getActivity().finish();
                             progress.dismiss();
                         } else {
                             MyMessage.showMessage(getActivity(), "Something went wrong!");

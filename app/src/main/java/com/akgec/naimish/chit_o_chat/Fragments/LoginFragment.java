@@ -111,6 +111,7 @@ public class LoginFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     startActivity(new Intent(getActivity(), UserActivity.class));
+                    getActivity().finish();
                     progress.dismiss();
                 } else {
                     MyMessage.showMessage(getActivity(), "Something went wrong!");
