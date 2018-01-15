@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.akgec.naimish.chit_o_chat.Info.MySharedPreferences;
@@ -17,8 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment implements AdapterView.OnItemClickListener
+{
     @BindView(R.id.user_list_view)
     ListView userListView;
 
@@ -41,5 +44,11 @@ public class UserFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         email=FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
         userListView.setAdapter(new UserListAdapter(getActivity(), MySharedPreferences.getPreference(getContext(), email+"")));
+        userListView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 }

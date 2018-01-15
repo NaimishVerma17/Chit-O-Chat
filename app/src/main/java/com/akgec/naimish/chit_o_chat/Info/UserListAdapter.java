@@ -1,6 +1,7 @@
 package com.akgec.naimish.chit_o_chat.Info;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class UserListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         UserViewHolder holder;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -89,6 +90,12 @@ public class UserListAdapter extends BaseAdapter {
         UserInfo info = getItem(i);
         holder = (UserViewHolder) view.getTag();
         holder.individualUserName.setText(info.getUserName());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Clicked",i+"");
+            }
+        });
 
         return view;
     }
